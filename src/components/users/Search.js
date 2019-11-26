@@ -6,22 +6,23 @@ const Search = () => {
   const githubContext = useContext(GithubContext);
   const alertContext = useContext(AlertContext);
 
-  const [text, setText] = useState(" ");
-  const onChange = e => setText(e.target.value);
+  const [text, setText] = useState("");
 
   const onSubmit = e => {
     e.preventDefault();
-    if (text !== " ") {
-      githubContext.searchUsers(text);
-      setText(" ");
+    if (text === "") {
+      alertContext.setAlert("Invalid Entry", "light");
     } else {
-      alertContext.setAlert("Invalid search entry", "light");
+      githubContext.searchUsers(text);
+      setText("");
     }
   };
 
+  const onChange = e => setText(e.target.value);
+
   return (
-    <div className="container">
-      <form className="form" onSubmit={onSubmit}>
+    <div>
+      <form onSubmit={onSubmit} className="form">
         <input
           type="text"
           name="text"
